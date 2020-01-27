@@ -77,8 +77,8 @@ export class AppComponent implements OnInit {
     if(!this.isRemP) {
       return;
     }
-    
-    var seat: Seat = this.seats.find(() => id === index);
+
+    var seat: Seat = this.seats.find(({id}) => id === index);
     const temp = this.seats.indexOf(seat);
     this.seats.splice(temp, 1);
     console.log(this.seats);
