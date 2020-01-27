@@ -14,9 +14,38 @@ export class AppComponent implements OnInit {
   seats = SEATS;
 
   isAddP = false;
+  isRemP = false;
+  isAddId = false;
+  isRemId = false;
+
+  DISABLED: boolean[] = [false, false, false, false];
 
   AddPointer(): void {
     this.isAddP = !this.isAddP;
+    this.CheckDisabled();
+  }
+
+  RemovePointer(): void {
+    this.isRemP = !this.isRemP;
+    this.CheckDisabled();
+  }
+
+  CheckDisabled(): void {
+    if(this.isAddP){
+      this.DISABLED = [false, true, true, true];
+    }
+    else if(this.isRemP){
+      this.DISABLED = [true, false, true, true];
+    }
+    else if(this.isAddId){
+      this.DISABLED = [true, true, false, true];
+    }
+    else if(this.isRemId){
+      this.DISABLED = [true, true, true, false];
+    }
+    else{
+      this.DISABLED = [false, false, false, false];
+    }
   }
 
   getPosition(event: any): void {
@@ -42,6 +71,17 @@ export class AppComponent implements OnInit {
     }
 
     this.seats.push(seat);
+  }
+
+  DeletePointer(index: number): void {
+    if(!this.isRemP) {
+      return;
+    }
+    
+    var seat: Seat = this.seats.find(() => id === index);
+    const temp = this.seats.indexOf(seat);
+    this.seats.splice(temp, 1);
+    console.log(this.seats);
   }
 
   constructor() { }
