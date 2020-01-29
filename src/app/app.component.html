@@ -8,14 +8,15 @@
     <div style="text-align:right;">
         <button type="button" id="AddP" [disabled]="DISABLED[0]" (click)="AddPointer()">Add Pointer</button>
         <button type="button" id="RemP" [disabled]="DISABLED[1]" (click)="RemovePointer()">Remove Pointer</button>
-        <button type="button" id="AddID" [disabled]="DISABLED[2]">Add ID</button>
+        <button type="button" id="AddID" [disabled]="DISABLED[2]" (click)="AddId()">Add ID</button>
         <button type="button" id="RemID" [disabled]="DISABLED[3]">Remove ID</button>
     </div>
 
     <div class="seats" (click)="getPosition($event)" [class.add]="isAddP">
         <img src="/assets/denah.png" alt="Denah" width="100%">
 
-        <a class="seat" (click)="DeletePointer(seat.id)" *ngFor="let seat of seats" [style.left.%]="seat.x" [style.top.%]="seat.y"></a>
+        <a class="seat" (click)="PointerOptions(seat.id)" *ngFor="let seat of seats" [style.left.%]="seat.x" [style.top.%]="seat.y"></a>
 
+        
     </div>
 </div>

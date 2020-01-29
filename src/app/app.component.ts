@@ -30,6 +30,16 @@ export class AppComponent implements OnInit {
     this.CheckDisabled();
   }
 
+  AddId(): void {
+    this.isAddId = !this.isAddId;
+    this.CheckDisabled();
+  }
+
+  RemoveId(): void {
+    this.isRemId = !this.isRemId;
+    this.CheckDisabled();
+  }
+
   CheckDisabled(): void {
     if(this.isAddP){
       this.DISABLED = [false, true, true, true];
@@ -68,20 +78,40 @@ export class AppComponent implements OnInit {
       y: (y-pos.top)/h*100,
       isVacant: true,
       isCubicle: true,
+      empId: "12345678"
     }
 
     this.seats.push(seat);
   }
 
-  DeletePointer(index: number): void {
-    if(!this.isRemP) {
+  PointerOptions(index: number): void {
+    if(!this.isRemP && !this.isAddId && !this.isRemId) {
       return;
     }
 
-    var seat: Seat = this.seats.find(({id}) => id === index);
-    const temp = this.seats.indexOf(seat);
-    this.seats.splice(temp, 1);
-    console.log(this.seats);
+    if(this.isRemP){
+      var seat: Seat = this.seats.find(({id}) => id === index);
+      const temp = this.seats.indexOf(seat);
+      this.seats.splice(temp, 1);
+    }
+    else if(this.isAddId){
+      if(seat.empId != null){
+        return;
+      }
+      else{
+        const testVar= prompt("Please enter an employee ID:");
+        if(testVar == "" || testVar == null){
+          return;
+        }
+        else{
+          seat.empId = testVar;
+        }
+      }
+    }
+    else if(this.isRemId){
+      var seat: Seat = this.seats.find(({id}) => id === index);
+      seat.empId = null;
+    }
   }
 
   constructor() { }
