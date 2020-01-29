@@ -5,6 +5,7 @@ export class Seat {
     y: number;
     isVacant: boolean;
     isCubicle: boolean;
+    empId: string;
 
     // position() {
     //     return `left: ${this.x}%; top: ${this.y}%;`;
