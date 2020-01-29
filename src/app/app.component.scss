@@ -1,0 +1,30 @@
+/* Style page content */
+.main {
+    margin-left: 160px; /* Same as the width of the sidebar */
+    padding: 0px 10px;
+  }
+
+  /* You can add global styles to this file, and also import other style files */
+button {
+    font-size: 20px;
+    padding: 10px 20px;
+    margin: 5px;
+}
+
+.seats{
+    position: relative;
+}
+.seats.add{
+    cursor: crosshair;
+}
+
+.seat{
+    display: block;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    transform: translate(-50%, -50%);
+
+    background-color: red;
+    border-radius: 100px;
+}

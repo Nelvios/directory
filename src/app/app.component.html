@@ -1,1 +1,17 @@
 <app-navbar [title]="title"></app-navbar>
+
+<div class="main">
+    <div style="text-align:right;">
+        <button type="button" id="AddP" disabled="false" (click)="AddPointer()">Add Pointer</button>
+        <button type="button" id="RemP" disabled="false">Remove Pointer</button>
+        <button type="button" id="AddID" disabled="false">Add ID</button>
+        <button type="button" id="RemID" disabled="false">Remove ID</button>
+    </div>
+
+    <div class="seats" (click)="getPosition($event)" [class.add]="isAddP">
+        <img src="/assets/denah.png" alt="Denah" width="100%">
+
+        <a class="seat" *ngFor="let seat of seats" [style.left.%]="seat.x" [style.top.%]="seat.y"></a>
+
+    </div>
+</div>
