@@ -16,16 +16,22 @@ const actions = {
   getAll: ({ commit }) => {
     axios.get('/employee.json')
       .then(res => {
-        return Response.json()
-      })
-      .then(data => {
-        const resultArray = []
-        for (const key in data) {
-          resultArray.push(data[key])
+        for (const key in res.data) {
+          console.log('key Value: ' + key)
+          const employDat = res.dat[key]
+          for (const value in employDat) {
+            console.log('value: ' + value)
+          }
         }
-        console.log(resultArray)
       })
-      .catch(err => console.log(err))
+      // .then(data => {
+      //   const resultArray = []
+      //   for (const key in data) {
+      //     resultArray.push(data[key])
+      //   }
+      //   console.log(resultArray)
+      // })
+      // .catch(err => console.log(err))
   }
 }
 
