@@ -1,18 +1,49 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <app-button></app-button>
+      <app-map></app-map>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import button from '@/components/button.vue'
+import map from '@/components/map.vue'
+import axios from 'axios'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    'app-button': button,
+    'app-map': map
+  },
+  created () {
+    axios.get('/employee.json')
+      .then(response => {
+        const resultArray = []
+        for (const employee in response.data) {
+          console.log('this is employee data: ' + employee)
+          const employeeDat = response.data[employee]
+          for (const value in employeeDat) {
+            console.log('this is value data: ' + value)
+          }
+        }
+        console.log(resultArray)
+      })
+      .then(data => {
+        const resultArray = []
+        for (const key in data) {
+          resultArray.push(data[key])
+        }
+        console.log(resultArray)
+      })
+      .catch(err => console.log(err))
   }
 }
 </script>
+
+<style lang="scss">
+  .home {
+    margin-left: 160px; /* Same as the width of the sidebar */
+    padding: 0px 10px;
+    }
+</style>
