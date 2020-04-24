@@ -29,13 +29,6 @@ export default {
         }
         console.log(resultArray)
       })
-      .then(data => {
-        const resultArray = []
-        for (const key in data) {
-          resultArray.push(data[key])
-        }
-        console.log(resultArray)
-      })
       .catch(err => console.log(err))
   }
 }
