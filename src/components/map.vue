@@ -23,8 +23,6 @@ export default {
         return
       }
 
-      console.log(this.employeeData)
-
       const x = event.clientX
       const y = event.clientY
       const w = this.$refs.seatsElement.clientWidth
