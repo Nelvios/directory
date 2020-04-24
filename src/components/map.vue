@@ -23,6 +23,8 @@ export default {
         return
       }
 
+      console.log(this.employeeData)
+
       const x = event.clientX
       const y = event.clientY
       const w = this.$refs.seatsElement.clientWidth
@@ -75,7 +77,8 @@ export default {
   computed: {
     ...mapGetters({
       seats: 'retrieveSeats',
-      buttonState: 'fetchAllButton'
+      buttonState: 'fetchAllButton',
+      employeeData: 'getAllDataEmployee'
     })
   }
 }

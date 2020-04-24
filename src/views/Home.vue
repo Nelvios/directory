@@ -8,7 +8,6 @@
 <script>
 import button from '@/components/button.vue'
 import map from '@/components/map.vue'
-import axios from 'axios'
 
 export default {
   name: 'Home',
@@ -17,19 +16,7 @@ export default {
     'app-map': map
   },
   created () {
-    axios.get('/employee.json')
-      .then(response => {
-        const resultArray = []
-        for (const employee in response.data) {
-          console.log('this is employee data: ' + employee)
-          const employeeDat = response.data[employee]
-          for (const value in employeeDat) {
-            console.log('this is value data: ' + value)
-          }
-        }
-        console.log(resultArray)
-      })
-      .catch(err => console.log(err))
+    this.$store.dispatch('getAll')
   }
 }
 </script>

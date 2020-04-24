@@ -1,37 +1,34 @@
-import axios from 'axios'
+import myApi from '../../api/api'
 
 const state = {
-  employee: {}
+  employee: null
 }
 
 const getters = {
-
+  getAllDataEmployee: state => {
+    return state.employee
+  }
 }
 
 const mutations = {
-
+  InitData: (state, payload) => {
+    state.employee = payload
+  }
 }
 
 const actions = {
   getAll: ({ commit }) => {
-    axios.get('/employee.json')
+    myApi.getData()
       .then(res => {
-        for (const key in res.data) {
-          console.log('key Value: ' + key)
-          const employDat = res.dat[key]
-          for (const value in employDat) {
-            console.log('value: ' + value)
-          }
+        const resultArray = []
+        for (const i in res.data) {
+          const repack = {}
+          repack[i] = res.data[i]
+          resultArray.push(repack)
         }
+        commit('InitData', resultArray)
       })
-      // .then(data => {
-      //   const resultArray = []
-      //   for (const key in data) {
-      //     resultArray.push(data[key])
-      //   }
-      //   console.log(resultArray)
-      // })
-      // .catch(err => console.log(err))
+      .catch(err => console.log(err))
   }
 }
 
