@@ -23,41 +23,44 @@ export default {
         return
       }
       let empId
-      console.log(this.employeeData)
 
-      const AskId = prompt('Please enter an employee ID:')
-      if (AskId === '' || AskId === null) {
-        alert('Please Input The Correct ID')
-      } else {
-        this.$store.dispatch('getById', AskId).then(res => {
-          if (!this.employeeExistance) {
-            alert('Employee NIP not exist')
-          } else {
-            empId = AskId
-            const x = event.clientX
-            const y = event.clientY
-            const w = this.$refs.seatsElement.clientWidth
-            const h = this.$refs.seatsElement.clientHeight
-            const pos = this.$refs.seatsElement.getBoundingClientRect()
+      const x = event.clientX
+      const y = event.clientY
+      const w = this.$refs.seatsElement.clientWidth
+      const h = this.$refs.seatsElement.clientHeight
+      const pos = this.$refs.seatsElement.getBoundingClientRect()
 
-            const tempId = this.seats[this.seats.length - 1].id + 1
-            const tempName = 'A' + ((parseInt(this.seats[this.seats.length - 1].name.replace(/\D/g, '')) + 1).toString())
-            console.log(tempName)
+      const tempId = this.seats[this.seats.length - 1].id + 1
+      const tempName = 'A' + ((parseInt(this.seats[this.seats.length - 1].name.replace(/\D/g, '')) + 1).toString())
 
-            if (empId) {
-              const seat = {
-                id: tempId,
-                name: tempName,
-                x: ((x - pos.left) / w) * 100,
-                y: ((y - pos.top) / h) * 100,
-                isVacant: true,
-                isCubicle: true,
-                empId: empId
-              }
+      const seat = {
+        id: tempId,
+        name: tempName,
+        x: ((x - pos.left) / w) * 100,
+        y: ((y - pos.top) / h) * 100,
+        isVacant: true,
+        isCubicle: true,
+        empId: null
+      }
+
+      const AskEmpId = confirm('Add pointer with employee ID?')
+      if (AskEmpId === true) {
+        const AskId = prompt('Please enter an employee ID:')
+        if (AskId === '' || AskId === null) {
+          alert('Please Input The Correct ID')
+        } else {
+          this.$store.dispatch('getById', AskId).then(res => {
+            if (!this.employeeExistance) {
+              alert('Employee NIP not exist')
+            } else {
+              empId = AskId
+              seat.empId = empId
               this.$store.dispatch('postSeat', seat)
             }
-          }
-        })
+          })
+        }
+      } else {
+        this.$store.dispatch('postSeat', seat)
       }
     },
     pointerOptions (index) {
@@ -92,7 +95,6 @@ export default {
     ...mapGetters({
       seats: 'retrieveSeats',
       buttonState: 'fetchAllButton',
-      employeeData: 'getAllDataEmployee',
       employeeExistance: 'getEmployeeExistance'
     })
   }
