@@ -22,25 +22,43 @@ export default {
       if (!this.buttonState.isAddPCondition) {
         return
       }
+      let empId
+      console.log(this.employeeData)
 
-      const x = event.clientX
-      const y = event.clientY
-      const w = this.$refs.seatsElement.clientWidth
-      const h = this.$refs.seatsElement.clientHeight
-      const pos = this.$refs.seatsElement.getBoundingClientRect()
+      const AskId = prompt('Please enter an employee ID:')
+      if (AskId === '' || AskId === null) {
+        alert('Please Input The Correct ID')
+      } else {
+        this.$store.dispatch('getById', AskId).then(res => {
+          if (!this.employeeExistance) {
+            alert('Employee NIP not exist')
+          } else {
+            empId = AskId
+            const x = event.clientX
+            const y = event.clientY
+            const w = this.$refs.seatsElement.clientWidth
+            const h = this.$refs.seatsElement.clientHeight
+            const pos = this.$refs.seatsElement.getBoundingClientRect()
 
-      const temp = this.seats[this.seats.length - 1].id + 1
+            const tempId = this.seats[this.seats.length - 1].id + 1
+            const tempName = 'A' + ((parseInt(this.seats[this.seats.length - 1].name.replace(/\D/g, '')) + 1).toString())
+            console.log(tempName)
 
-      const seat = {
-        id: temp,
-        name: 'testName',
-        x: ((x - pos.left) / w) * 100,
-        y: ((y - pos.top) / h) * 100,
-        isVacant: true,
-        isCubicle: true,
-        empId: '123456789'
+            if (empId) {
+              const seat = {
+                id: tempId,
+                name: tempName,
+                x: ((x - pos.left) / w) * 100,
+                y: ((y - pos.top) / h) * 100,
+                isVacant: true,
+                isCubicle: true,
+                empId: empId
+              }
+              this.$store.dispatch('postSeat', seat)
+            }
+          }
+        })
       }
-      this.$store.commit('addSeat', seat)
     },
     pointerOptions (index) {
       if (
@@ -58,11 +76,9 @@ export default {
         this.$store.commit('removePointer', temp)
       } else if (this.buttonState.isAddIdCondition) {
         if (seat.empId != null) {
-
         } else {
           const AskId = prompt('Please enter an employee ID:')
           if (AskId === '' || AskId === null) {
-
           } else {
             seat.empId = AskId
           }
@@ -76,7 +92,8 @@ export default {
     ...mapGetters({
       seats: 'retrieveSeats',
       buttonState: 'fetchAllButton',
-      employeeData: 'getAllDataEmployee'
+      employeeData: 'getAllDataEmployee',
+      employeeExistance: 'getEmployeeExistance'
     })
   }
 }

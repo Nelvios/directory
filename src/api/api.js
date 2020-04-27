@@ -1,12 +1,25 @@
 import Axios from 'axios'
 
-const HTTP = Axios.create({
+const httpEmployee = Axios.create({
   baseURL: 'https://dataemp-9c786.firebaseio.com',
   headers: { Accept: 'application/json' }
 })
 
+const httpSeat = Axios.create({
+  baseURL: 'https://seat-45454.firebaseio.com'
+})
+
 export default {
-  getData () {
-    return HTTP.get('/employee.json')
+  getDataEmployee () {
+    return httpEmployee.get('/employee.json')
+  },
+  getByIdEmployee (searchId) {
+    return httpEmployee.get(`/employee.json?orderBy="$key"&equalTo="${searchId}"`)
+  },
+  postSeat (payload) {
+    return httpSeat.post('/seat.json', payload)
+  },
+  getAllSeat () {
+    return httpSeat.get('/seat.json')
   }
 }

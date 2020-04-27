@@ -16,7 +16,7 @@ export default {
     'app-map': map
   },
   created () {
-    this.$store.dispatch('getAll')
+    this.$store.dispatch('getAllSeat')
   }
 }
 </script>
