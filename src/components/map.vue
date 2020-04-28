@@ -1,5 +1,5 @@
 <template>
-  <div class="seats" @click="getPosition" ref="seatsElement">
+  <div class="seats" :class="{toRight : isHidden}" @click="getPosition" ref="seatsElement">
     <img src="../assets/denah.png" alt="Denah" width="100%" />
 
     <a
@@ -22,8 +22,6 @@ export default {
       if (!this.buttonState.isAddPCondition) {
         return
       }
-      let empId
-
       const x = event.clientX
       const y = event.clientY
       const w = this.$refs.seatsElement.clientWidth
@@ -42,52 +40,45 @@ export default {
         isCubicle: true,
         empId: null
       }
-
-      const AskEmpId = confirm('Add pointer with employee ID?')
-      if (AskEmpId === true) {
-        const AskId = prompt('Please enter an employee ID:')
-        if (AskId === '' || AskId === null) {
-          alert('Please Input The Correct ID')
-        } else {
-          this.$store.dispatch('getById', AskId).then(res => {
-            if (!this.employeeExistance) {
-              alert('Employee NIP not exist')
-            } else {
-              empId = AskId
-              seat.empId = empId
-              this.$store.dispatch('postSeat', seat)
-            }
-          })
-        }
-      } else {
-        this.$store.dispatch('postSeat', seat)
-      }
+      this.$store.dispatch('postSeat', seat)
     },
     pointerOptions (index) {
+      const seat = this.seats.find(({ id }) => id === index)
+      const indexSeat = this.seats.indexOf(seat)
       if (
         !this.buttonState.isRemPCondition &&
         !this.buttonState.isAddIdCondition &&
         !this.buttonState.isRemIdCondition
       ) {
-        return
+        if (seat.empId) {
+          this.$store.dispatch('getById', seat.empId)
+          this.$store.commit('showSidePanel')
+        }
       }
 
-      const seat = this.seats.find(({ id }) => id === index)
-
       if (this.buttonState.isRemPCondition) {
-        const temp = this.seats.indexOf(seat)
-        this.$store.commit('removePointer', temp)
+        this.$store.dispatch('deleteSeat', indexSeat)
       } else if (this.buttonState.isAddIdCondition) {
         if (seat.empId != null) {
         } else {
           const AskId = prompt('Please enter an employee ID:')
           if (AskId === '' || AskId === null) {
+            alert('Please Input The Correct ID')
           } else {
-            seat.empId = AskId
+            this.$store.dispatch('checkExistance', AskId).then(res => {
+              if (!this.employeeExistance) {
+                alert('Employee NIP not exist')
+              } else {
+                const temp = { index: indexSeat, empId: AskId }
+                this.$store.dispatch('addEmpId', temp)
+              }
+            })
           }
         }
       } else if (this.buttonState.isRemIdCondition) {
         seat.empId = null
+        const temp = { index: indexSeat, seatData: seat }
+        this.$store.dispatch('deleteId', temp)
       }
     }
   },
@@ -95,7 +86,8 @@ export default {
     ...mapGetters({
       seats: 'retrieveSeats',
       buttonState: 'fetchAllButton',
-      employeeExistance: 'getEmployeeExistance'
+      employeeExistance: 'getEmployeeExistance',
+      isHidden: 'isHidden'
     })
   }
 }

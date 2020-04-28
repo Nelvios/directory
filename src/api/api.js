@@ -19,6 +19,12 @@ export default {
   postSeat (payload) {
     return httpSeat.post('/seat.json', payload)
   },
+  deleteSeat (selectedId) {
+    return httpSeat.delete(`/seat/${selectedId}.json`)
+  },
+  patchSeat (selectedId, payload) {
+    return httpSeat.patch(`/seat/${selectedId}.json`, payload)
+  },
   getAllSeat () {
     return httpSeat.get('/seat.json')
   }

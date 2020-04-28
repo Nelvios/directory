@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="main">
+    <div :class="{toRight : isHidden}">
       <div style="text-align:right;">
         <button :disabled="DISABLED[0]" @click="changeIsAddP">Add Pointer</button>
         <button :disabled="DISABLED[1]" @click="changeIsRemP">Remove Pointer</button>
@@ -25,7 +25,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      DISABLED: 'disabledChanged'
+      DISABLED: 'disabledChanged',
+      isHidden: 'isHidden'
     })
   }
 }

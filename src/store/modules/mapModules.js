@@ -15,7 +15,13 @@ const state = {
 
 const getters = {
   retrieveSeats: state => {
-    return state.seats
+    const resultArray = []
+    for (const i in state.seats) {
+      for (const z in state.seats[i]) {
+        resultArray.push(state.seats[i][z])
+      }
+    }
+    return resultArray
   }
 }
 
@@ -26,8 +32,14 @@ const mutations = {
   addSeat (state, payload) {
     state.seats.push(payload)
   },
-  removePointer (state, payload) {
+  removeSeat (state, payload) {
     state.seats.splice(payload, 1)
+  },
+  addId (state, payload) {
+    state.seats[payload.index][payload.id].empId = payload.empId
+  },
+  removeId (state, payload) {
+    state.seats[payload.index][payload.id] = payload.seatData
   }
 }
 
@@ -35,17 +47,36 @@ const actions = {
   postSeat: ({ commit }, payload) => {
     myApi.postSeat(payload)
       .then(res => {
-        console.log(res)
-        commit('addSeat', payload)
+        const temp = { [res.data.name]: payload }
+        commit('addSeat', temp)
       })
       .catch(err => console.log(err))
+  },
+  deleteSeat: ({ commit, state }, payload) => {
+    let temp = null
+    temp = { index: payload, id: Object.keys(state.seats[payload])[0] }
+    myApi.deleteSeat(temp.id)
+    commit('removeSeat', temp.index)
+  },
+  addEmpId: ({ commit, state }, payload) => {
+    const tempUpdate = { empId: payload.empId }
+    const id = Object.keys(state.seats[payload.index])[0]
+    payload.id = id
+    myApi.patchSeat(id, tempUpdate)
+    commit('addId', payload)
+  },
+  deleteId: ({ commit, state }, payload) => {
+    const id = Object.keys(state.seats[payload.index])[0]
+    myApi.patchSeat(id, payload.seatData)
+    commit('removeId', payload)
   },
   getAllSeat: ({ commit }) => {
     myApi.getAllSeat()
       .then(res => {
         const resultArray = []
         for (const i in res.data) {
-          resultArray.push(res.data[i])
+          const tempObject = { [i]: res.data[i] }
+          resultArray.push(tempObject)
         }
         commit('initData', resultArray)
       })
