@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper">
     <div class="sidenav">
       <router-link to="/"><a>Home</a></router-link>
       <router-link to="/location"><a>Location</a></router-link>
@@ -10,6 +10,13 @@
 </template>
 
 <style lang="scss">
+  .wrapper{
+    display: grid;
+    grid-template-columns: 160px auto;
+    grid-column-gap: .5em;
+    grid-template-areas: "sidenav main";
+  }
+
   /* The sidebar menu */
     .sidenav {
     height: 100%; /* Full-height: remove this if you want "auto" height */
@@ -21,6 +28,7 @@
     background-color: #111; /* Black */
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 20px;
+    grid-area: sidenav;
     }
 
     /* The navigation menu links */

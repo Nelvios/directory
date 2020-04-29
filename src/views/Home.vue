@@ -30,10 +30,11 @@ export default {
 
 <style lang="scss">
   .home {
-    margin-left: 160px; /* Same as the width of the sidebar */
     padding: 0px 10px;
+    grid-area: main;
     }
   .toRight{
     margin-right: 270px;
+    transition: margin-right .5s;
   }
 </style>

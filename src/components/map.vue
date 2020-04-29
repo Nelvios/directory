@@ -19,8 +19,27 @@ import { mapGetters } from 'vuex'
 export default {
   methods: {
     getPosition (event) {
+      // if (
+      //   !this.buttonState.isRemPCondition &&
+      //   !this.buttonState.isAddIdCondition &&
+      //   !this.buttonState.isRemIdCondition &&
+      //   !this.buttonState.isAddPCondition
+      // ) {
+      //   if (this.isHidden) {
+      //     this.$store.commit('hideSidePanel')
+      //     return
+      //   } else {
+      //     return
+      //   }
+      // }
       if (!this.buttonState.isAddPCondition) {
-        return
+        if (this.isHidden) {
+          this.$store.commit('hideSidePanel')
+          this.$store.commit('pushEmployee', {})
+          return
+        } else {
+          return
+        }
       }
       const x = event.clientX
       const y = event.clientY
@@ -51,8 +70,9 @@ export default {
         !this.buttonState.isRemIdCondition
       ) {
         if (seat.empId) {
-          this.$store.dispatch('getById', seat.empId)
-          this.$store.commit('showSidePanel')
+          this.$store.dispatch('getById', seat.empId).then(res => {
+            this.$store.commit('showSidePanel')
+          })
         }
       }
 
@@ -87,13 +107,14 @@ export default {
       seats: 'retrieveSeats',
       buttonState: 'fetchAllButton',
       employeeExistance: 'getEmployeeExistance',
-      isHidden: 'isHidden'
+      isHidden: 'isHidden',
+      employeeName: 'getEmployeeFullName'
     })
   }
 }
 </script>
 
-<style>
+<style scoped>
 .seats {
   position: relative;
 }

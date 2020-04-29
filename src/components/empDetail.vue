@@ -9,13 +9,6 @@
       <li>Seat Number: {{getEmployeeSeatNumber}}</li>
       <li>Sync Manager: {{getEmployeeSyncManager}}</li>
     </ul>
-
-    <!-- <h4>Full Name: {{ getEmployeeFullName }}</h4>
-    <h4>Group: {{getEmployeeGroup}}</h4>
-    <h4>Initial: {{getEmployeeInitial}}</h4>
-    <h4>Office Location: {{getEmployeeOfficeLocation}}</h4>
-    <h4>Seat Number: {{getEmployeeSeatNumber}}</h4>
-    <h4>Sync Manager: {{getEmployeeSyncManager}}</h4> -->
   </div>
 </template>
 
@@ -31,15 +24,11 @@ export default {
       'getEmployeeSeatNumber',
       'getEmployeeSyncManager'
     ])
-    // fullName () {
-    //   const temp = this.$store.getters.getDataEmployee
-    //   return temp.fullName
-    // }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .sideTable {
   height: 100%; /* 100% Full-height */
   width: 270px; /* 0 width - change this with JavaScript */
@@ -50,10 +39,16 @@ export default {
   background-color: #111; /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
-  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  /* transition: width 2s; 0.5 second transition effect to slide in the sidenav */
 }
 .remPad{
   padding: 0;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 .sideTable li{
   padding: 8px 20px 8px 8px;
