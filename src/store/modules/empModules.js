@@ -7,23 +7,8 @@ const state = {
 }
 
 const getters = {
-  getEmployeeFullName: state => {
-    return state.employee.sambutan + '. ' + state.employee.fullName
-  },
-  getEmployeeGroup: state => {
-    return state.employee.group
-  },
-  getEmployeeInitial: state => {
-    return state.employee.initial
-  },
-  getEmployeeOfficeLocation: state => {
-    return state.employee.officeLocation
-  },
-  getEmployeeSeatNumber: state => {
-    return state.employee.seatNumber
-  },
-  getEmployeeSyncManager: state => {
-    return state.employee.syncManager
+  getEmployeeDetail: state => {
+    return state.employee
   },
   getEmployeeExistance: state => {
     return state.employeeExist

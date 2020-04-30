@@ -37,4 +37,8 @@ export default {
     margin-right: 270px;
     transition: margin-right .5s;
   }
+  .toLeft{
+    margin-right: 0;
+    transition: margin-right .5s;
+  }
 </style>

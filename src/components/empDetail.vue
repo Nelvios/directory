@@ -1,29 +1,26 @@
 <template>
-  <div class="sideTable">
-    <div class="empPhoto"></div>
-    <ul class="remPad">
-      <li>Full Name: {{ getEmployeeFullName }}</li>
-      <li>Group: {{getEmployeeGroup}}</li>
-      <li>Initial: {{getEmployeeInitial}}</li>
-      <li>Office Location: {{getEmployeeOfficeLocation}}</li>
-      <li>Seat Number: {{getEmployeeSeatNumber}}</li>
-      <li>Sync Manager: {{getEmployeeSyncManager}}</li>
-    </ul>
-  </div>
+  <transition name="fade">
+    <div class="sideTable">
+      <div class="empPhoto"></div>
+      <ul class="remPad">
+        <li>Full Name: {{ employeeDetail.sambutan + '. ' + employeeDetail.fullName }}</li>
+        <li>Group: {{employeeDetail.group}}</li>
+        <li>Initial: {{employeeDetail.initial}}</li>
+        <li>Office Location: {{employeeDetail.officeLocation}}</li>
+        <li>Seat Number: {{employeeDetail.seatNumber}}</li>
+        <li>Sync Manager: {{employeeDetail.syncManager}}</li>
+      </ul>
+    </div>
+  </transition>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 export default {
   computed: {
-    ...mapGetters([
-      'getEmployeeFullName',
-      'getEmployeeGroup',
-      'getEmployeeInitial',
-      'getEmployeeOfficeLocation',
-      'getEmployeeSeatNumber',
-      'getEmployeeSyncManager'
-    ])
+    ...mapGetters({
+      employeeDetail: 'getEmployeeDetail'
+    })
   }
 }
 </script>
@@ -31,7 +28,7 @@ export default {
 <style scoped>
 .sideTable {
   height: 100%; /* 100% Full-height */
-  width: 270px; /* 0 width - change this with JavaScript */
+  width: 270px;
   position: fixed; /* Stay in place */
   z-index: 1; /* Stay on top */
   top: 0; /* Stay at the top */

@@ -1,5 +1,5 @@
 <template>
-  <div class="seats" :class="{toRight : isHidden}" @click="getPosition" ref="seatsElement">
+  <div class="seats" :class="{toRight : isHidden, toLeft : !isHidden}" @click="getPosition" ref="seatsElement">
     <img src="../assets/denah.png" alt="Denah" width="100%" />
 
     <a
@@ -19,19 +19,6 @@ import { mapGetters } from 'vuex'
 export default {
   methods: {
     getPosition (event) {
-      // if (
-      //   !this.buttonState.isRemPCondition &&
-      //   !this.buttonState.isAddIdCondition &&
-      //   !this.buttonState.isRemIdCondition &&
-      //   !this.buttonState.isAddPCondition
-      // ) {
-      //   if (this.isHidden) {
-      //     this.$store.commit('hideSidePanel')
-      //     return
-      //   } else {
-      //     return
-      //   }
-      // }
       if (!this.buttonState.isAddPCondition) {
         if (this.isHidden) {
           this.$store.commit('hideSidePanel')
