@@ -21,7 +21,8 @@ export default {
     getPosition (event) {
       if (!this.buttonState.isAddPCondition) {
         if (this.isHidden) {
-          this.$store.commit('hideSidePanel')
+          this.$store.commit('changeSidePanelState')
+          this.$store.commit('changeDrawerState')
           this.$store.commit('pushEmployee', {})
           return
         } else {
@@ -58,7 +59,8 @@ export default {
       ) {
         if (seat.empId) {
           this.$store.dispatch('getById', seat.empId).then(res => {
-            this.$store.commit('showSidePanel')
+            this.$store.commit('changeSidePanelState')
+            this.$store.commit('changeDrawerState')
           })
         }
       }

@@ -3,7 +3,8 @@ import myApi from '../../api/api'
 const state = {
   employee: {},
   employeeExist: null,
-  show: false
+  show: false,
+  drawer: null
 }
 
 const getters = {
@@ -12,6 +13,9 @@ const getters = {
   },
   getEmployeeExistance: state => {
     return state.employeeExist
+  },
+  getEmpDrawerState: state => {
+    return state.drawer
   },
   isHidden: state => {
     return state.show
@@ -28,11 +32,11 @@ const mutations = {
   employeeExist: state => {
     state.employeeExist = true
   },
-  hideSidePanel: state => {
-    state.show = false
+  changeSidePanelState: state => {
+    state.show = !state.show
   },
-  showSidePanel: state => {
-    state.show = true
+  changeDrawerState: state => {
+    state.drawer = !state.drawer
   }
 }
 

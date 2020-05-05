@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import homeButtonModules from './modules/homeButtonModules'
+import adminButtonModules from './modules/adminButtonModules'
 import mapModules from './modules/mapModules'
 import empModules from './modules/empModules'
 
@@ -14,7 +14,7 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
-    homeButtonModules,
+    adminButtonModules,
     mapModules,
     empModules
   }

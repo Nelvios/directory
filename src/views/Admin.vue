@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import button from '@/components/button.vue'
+import button from '@/components/buttonAdmin.vue'
 import map from '@/components/map.vue'
 import employeeDetail from '@/components/empDetail.vue'
 import { mapGetters } from 'vuex'
@@ -81,6 +81,7 @@ export default {
     }
   }
   .admin {
+    margin-top: 1rem;
     padding: 0px 10px;
     grid-area: main;
     }

@@ -1,20 +1,23 @@
 <template>
   <div class="home">
-      <app-map></app-map>
-      <app-emp-detail></app-emp-detail>
+    <app-search></app-search>
+    <app-map></app-map>
+    <app-emp-detail></app-emp-detail>
   </div>
 </template>
 
 <script>
 import map from '@/components/map.vue'
 import employeeDetail from '@/components/empDetail.vue'
+import search from '@/components/searchEmp.vue'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'Home',
   components: {
     'app-map': map,
-    'app-emp-detail': employeeDetail
+    'app-emp-detail': employeeDetail,
+    'app-search': search
   },
   computed: {
     ...mapGetters(['isHidden'])
