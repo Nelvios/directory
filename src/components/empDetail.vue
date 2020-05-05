@@ -1,6 +1,34 @@
 <template>
-  <transition name="fade">
-    <div class="sideTable">
+  <div>
+    <template >
+      <div class="empPhoto"></div>
+      <div class="container-detail">
+        <div class="container-title">Full Name: </div>
+        <div class="detail">{{ employeeDetail.sambutan + '. ' + employeeDetail.fullName }}</div>
+      </div>
+      <div class="container-detail">
+        <div class="container-title">Group: </div>
+        <div class="detail">{{employeeDetail.group}}</div>
+      </div>
+      <div class="container-detail">
+        <div class="container-title">Initial: </div>
+        <div class="detail">{{employeeDetail.initial}}</div>
+      </div>
+      <div class="container-detail">
+        <div class="container-title">Office Location: </div>
+        <div class="detail">{{employeeDetail.officeLocation}}</div>
+      </div>
+      <div class="container-detail">
+        <div class="container-title">Seat Number: </div>
+        <div class="detail">{{employeeDetail.seatNumber}}</div>
+      </div>
+      <div class="container-detail">
+        <div class="container-title">Sync Manager: </div>
+        <div class="detail">{{employeeDetail.syncManager}}</div>
+      </div>
+    </template>
+  </div>
+    <!-- <div class="sideTable">
       <div class="empPhoto"></div>
       <ul class="remPad">
         <li>Full Name: {{ employeeDetail.sambutan + '. ' + employeeDetail.fullName }}</li>
@@ -10,8 +38,7 @@
         <li>Seat Number: {{employeeDetail.seatNumber}}</li>
         <li>Sync Manager: {{employeeDetail.syncManager}}</li>
       </ul>
-    </div>
-  </transition>
+    </div> -->
 </template>
 
 <script>
@@ -55,5 +82,17 @@ export default {
   display: block;
   transition: 0.3s;
   margin: 10px 0;
+}
+.container-detail{
+  margin: 1rem 0;
+}
+.container-title{
+  padding: .4rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0,0,0,.03);
+  border-bottom: 1px solid rgba(0,0,0,.125);
+}
+.detail{
+  padding: .75rem 1.25rem;
 }
 </style>
