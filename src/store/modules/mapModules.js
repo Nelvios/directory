@@ -1,5 +1,27 @@
 import myApi from '../../api/api'
 
+function searchObj (obj, query) {
+  for (var key in obj) {
+    var value = obj[key]
+    if (typeof value === 'object') {
+      return searchObj(value, query)
+    }
+    if (typeof value === 'string' && value.toLowerCase().indexOf(query.toLowerCase()) > -1) {
+      return obj
+    }
+  }
+}
+
+function unpackObj (obj) {
+  const resultArray = []
+  for (const i in obj) {
+    for (const z in obj[i]) {
+      resultArray.push(obj[i][z])
+    }
+  }
+  return resultArray
+}
+
 const state = {
   seats: null
   // seats: [
@@ -15,13 +37,7 @@ const state = {
 
 const getters = {
   retrieveSeats: state => {
-    const resultArray = []
-    for (const i in state.seats) {
-      for (const z in state.seats[i]) {
-        resultArray.push(state.seats[i][z])
-      }
-    }
-    return resultArray
+    return unpackObj(state.seats)
   }
 }
 
@@ -40,6 +56,12 @@ const mutations = {
   },
   removeId (state, payload) {
     state.seats[payload.index][payload.id] = payload.seatData
+  },
+  querySeat (state, payload) {
+    const temp = state.seats.filter(function (obj) {
+      return searchObj(obj, payload.NIP)
+    })
+    state.seats = temp
   }
 }
 

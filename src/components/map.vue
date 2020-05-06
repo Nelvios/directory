@@ -96,8 +96,7 @@ export default {
       seats: 'retrieveSeats',
       buttonState: 'fetchAllButton',
       employeeExistance: 'getEmployeeExistance',
-      isHidden: 'isHidden',
-      employeeName: 'getEmployeeFullName'
+      isHidden: 'isHidden'
     })
   }
 }

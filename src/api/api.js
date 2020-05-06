@@ -16,6 +16,9 @@ export default {
   getByIdEmployee (searchId) {
     return httpEmployee.get(`/employee.json?orderBy="$key"&equalTo="${searchId}"`)
   },
+  filterData (payload) {
+    return httpEmployee.get(`/employee.json?orderBy="${payload.queryParams}"&startAt="${payload.query}"&limitToFirst=5`)
+  },
   postSeat (payload) {
     return httpSeat.post('/seat.json', payload)
   },
