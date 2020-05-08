@@ -39,25 +39,38 @@ export default {
           queryParams: 'fullName',
           query: reformatFullName
         }
-        this.$router.push({ name: 'Home', query: { name: queryObject.query } })
-        this.$store.dispatch('findQuery', queryObject).then(res => {
-          const temp = this.$store.getters.getEmployeeDetail
-          this.$store.commit('querySeat', temp)
-        })
+        this.$store.commit('setQuery', queryObject)
+        // this.$router.push({ name: 'Home', query: { name: queryObject.query } })
+        // this.$store.dispatch('findQuery', queryObject).then(res => {
+        //   const temp = this.$store.getters.getEmployeeDetail
+        //   this.$store.commit('querySeat', temp)
+        // })
       } else if (this.initial) {
         const queryObject = {
           queryParams: 'initial',
           query: this.initial.toUpperCase()
         }
-        this.$router.push({ name: 'Home', query: { initial: queryObject.query } })
-        this.$store.dispatch('findQuery', queryObject)
+        this.$store.commit('setQuery', queryObject)
+        // this.$router.push({ name: 'Home', query: { initial: queryObject.query } })
+        // this.$store.dispatch('findQuery', queryObject)
       }
     }
   },
+  computed: {
+    updateNameInitial: function () {
+      return this.$store.getters.queryData
+    }
+  },
   watch: {
-    $route (to, from) {
-      this.fullName = this.$route.query.name
-      this.initial = this.$route.query.initial
+    updateNameInitial: function (value) {
+      if (this.fullName !== value.fullName) {
+        this.fullName = value.fullName
+      } else if (this.initial !== value.initial) {
+        this.initial = value.initial
+      } else if (!value.fullName && !value.initial) {
+        this.fullName = null
+        this.initial = null
+      }
     }
   }
 }

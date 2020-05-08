@@ -19,11 +19,67 @@ export default {
     'app-emp-detail': employeeDetail,
     'app-search': search
   },
+  methods: {
+    manipulateQuery (fullName, initial) {
+      let temp
+      if (fullName) {
+        temp = {
+          queryParams: 'fullName',
+          query: fullName
+        }
+      } else if (initial) {
+        temp = {
+          queryParams: 'initial',
+          query: initial
+        }
+      }
+      this.$store.dispatch('findQuery', temp).then(res => {
+        const temp2 = this.$store.getters.getEmployeeDetail
+        this.$store.commit('querySeat', temp2)
+      })
+    },
+    updateRoute (data) {
+      if (data.queryParams === 'fullName') {
+        this.$router.push({ name: 'Home', query: { name: data.query } })
+      } else if (data.queryParams === 'initial') {
+        this.$router.push({ name: 'Home', query: { initial: data.query } })
+      }
+    },
+    updateQuery (fullName, initial) {
+      if (fullName || initial) {
+        const temp = {
+          fullName,
+          initial
+        }
+        this.$store.commit('updateQuery', temp)
+      }
+    }
+  },
   computed: {
-    ...mapGetters(['isHidden'])
+    ...mapGetters(['isHidden']),
+    triggerQuery: function () {
+      return this.$store.getters.queryData
+    }
+  },
+  watch: {
+    $route (to, from) {
+      if (!this.$route.query.name && !this.$route.query.initial) {
+        this.$store.commit('deleteSearchedSeat')
+        this.updateQuery(this.$route.query.name, this.$route.query.initial)
+        console.log(this.$route.query.name)
+        console.log(this.$route.query.initial)
+      } else {
+        this.manipulateQuery(this.$route.query.name, this.$route.query.initial)
+        this.updateQuery(this.$route.query.name, this.$route.query.initial)
+      }
+    },
+    triggerQuery: function (value) {
+      this.updateRoute(value)
+    }
   },
   created () {
     this.$store.dispatch('getAllSeat')
+    // this.updateQuery(this.$route.query.name, this.$route.query.initial)
   }
 }
 </script>

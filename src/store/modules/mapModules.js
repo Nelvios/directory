@@ -23,7 +23,9 @@ function unpackObj (obj) {
 }
 
 const state = {
-  seats: null
+  seats: null,
+  searchedSeats: null,
+  query: null
   // seats: [
   // { id: 1, name: 'A1', x: 10, y: 10, isVacant: true, isCubicle: true, empId: '11111111' },
   // { id: 2, name: 'A2', x: 20, y: 10, isVacant: true, isCubicle: true, empId: '22222222' }
@@ -38,6 +40,19 @@ const state = {
 const getters = {
   retrieveSeats: state => {
     return unpackObj(state.seats)
+  },
+  retrieveSearchedSeats: state => {
+    return unpackObj(state.searchedSeats)
+  },
+  retrieveSearchedObject: state => {
+    const objects = {
+      fullName: state.fullName,
+      initial: state.initial
+    }
+    return objects
+  },
+  queryData: state => {
+    return state.query
   }
 }
 
@@ -57,11 +72,23 @@ const mutations = {
   removeId (state, payload) {
     state.seats[payload.index][payload.id] = payload.seatData
   },
+  setQuery (state, payload) {
+    state.query = payload
+  },
+  updateQuery (state, payload) {
+    state.query = payload
+  },
+  // setFullNameOrInitial (state, payload) {
+  //   state.query.query = payload
+  // },
   querySeat (state, payload) {
     const temp = state.seats.filter(function (obj) {
       return searchObj(obj, payload.NIP)
     })
-    state.seats = temp
+    state.searchedSeats = temp
+  },
+  deleteSearchedSeat (state, payload) {
+    state.searchedSeats = []
   }
 }
 

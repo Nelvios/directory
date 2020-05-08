@@ -2,15 +2,30 @@
   <div class="seats" :class="{toRight : isHidden, toLeft : !isHidden}" @click="getPosition" ref="seatsElement">
     <img src="../assets/denah.png" alt="Denah" width="100%" />
 
-    <a
-      class="seat"
-      v-for="seat in seats"
-      :key="seat.id"
-      @click="pointerOptions(seat.id)"
-      :style="[{'background-color':seat.empId != null ? '#7FFF00' : 'red',
-      'left': seat.x + '%',
-      'top': seat.y + '%'}]"
-    ></a>
+    <template v-if="seats && searchedSeats.length == 0">
+      <a
+        class="seat"
+        v-for="seat in seats"
+        :key="seat.id"
+        @click="pointerOptions(seat.id)"
+        :style="[{'background-color':seat.empId != null ? '#7FFF00' : 'red',
+        'left': seat.x + '%',
+        'top': seat.y + '%'}]"
+      ></a>
+    </template>
+
+    <template v-if="searchedSeats">
+      <a
+        id="selectedSeats"
+        class="seat"
+        v-for="seat in searchedSeats"
+        :key="seat.id"
+        @click="pointerOptions(seat.id)"
+        :style="[{'background-color':seat.empId != null ? '#7FFF00' : 'red',
+        'left': seat.x + '%',
+        'top': seat.y + '%'}]"
+      ></a>
+    </template>
   </div>
 </template>
 
@@ -94,6 +109,7 @@ export default {
   computed: {
     ...mapGetters({
       seats: 'retrieveSeats',
+      searchedSeats: 'retrieveSearchedSeats',
       buttonState: 'fetchAllButton',
       employeeExistance: 'getEmployeeExistance',
       isHidden: 'isHidden'
