@@ -54,6 +54,11 @@ export default {
         // this.$router.push({ name: 'Home', query: { initial: queryObject.query } })
         // this.$store.dispatch('findQuery', queryObject)
       }
+    },
+    backToInit () {
+      this.select = null
+      this.fullName = null
+      this.initial = null
     }
   },
   computed: {
@@ -63,14 +68,17 @@ export default {
   },
   watch: {
     updateNameInitial: function (value) {
-      if (this.fullName !== value.fullName) {
-        this.fullName = value.fullName
-      } else if (this.initial !== value.initial) {
-        this.initial = value.initial
-      } else if (!value.fullName && !value.initial) {
-        this.fullName = null
-        this.initial = null
+      if (!value.query) {
+        this.backToInit()
       }
+      // if (this.fullName !== value.fullName) {
+      //   this.fullName = value.fullName
+      // } else if (this.initial !== value.initial) {
+      //   this.initial = value.initial
+      // } else if (!value.fullName && !value.initial) {
+      //   this.fullName = null
+      //   this.initial = null
+      // }
     }
   }
 }

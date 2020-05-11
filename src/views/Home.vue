@@ -22,21 +22,31 @@ export default {
   methods: {
     manipulateQuery (fullName, initial) {
       let temp
-      if (fullName) {
-        temp = {
-          queryParams: 'fullName',
-          query: fullName
+      if (fullName || initial) {
+        console.log('masuk sini')
+        if (fullName) {
+          temp = {
+            queryParams: 'fullName',
+            query: fullName
+          }
+        } else if (initial) {
+          temp = {
+            queryParams: 'initial',
+            query: initial
+          }
         }
-      } else if (initial) {
+        this.$store.dispatch('findQuery', temp).then(res => {
+          const temp2 = this.$store.getters.getEmployeeDetail
+          this.$store.commit('querySeat', temp2)
+        })
+      } else {
+        console.log('masuk situ')
         temp = {
-          queryParams: 'initial',
-          query: initial
+          queryParams: null,
+          query: null
         }
+        this.$store.commit('setQuery', temp)
       }
-      this.$store.dispatch('findQuery', temp).then(res => {
-        const temp2 = this.$store.getters.getEmployeeDetail
-        this.$store.commit('querySeat', temp2)
-      })
     },
     updateRoute (data) {
       if (data.queryParams === 'fullName') {
@@ -44,16 +54,24 @@ export default {
       } else if (data.queryParams === 'initial') {
         this.$router.push({ name: 'Home', query: { initial: data.query } })
       }
-    },
-    updateQuery (fullName, initial) {
-      if (fullName || initial) {
-        const temp = {
-          fullName,
-          initial
-        }
-        this.$store.commit('updateQuery', temp)
-      }
     }
+    // updateQuery (fullName, initial) {
+    //   console.log(fullName)
+    //   console.log(initial)
+    //   let temp
+    //   if (fullName || initial) {
+    //     temp = {
+    //       fullName,
+    //       initial
+    //     }
+    //   } else {
+    //     temp = {
+    //       fullName: null,
+    //       initial: null
+    //     }
+    //   }
+    //   this.$store.commit('setQuery', temp)
+    // }
   },
   computed: {
     ...mapGetters(['isHidden']),
@@ -63,14 +81,15 @@ export default {
   },
   watch: {
     $route (to, from) {
-      if (!this.$route.query.name && !this.$route.query.initial) {
+      console.log(from)
+      // console.log(to.query)
+      if (!to.query.name && !to.query.initial) {
+        console.log('masuk sini')
         this.$store.commit('deleteSearchedSeat')
-        this.updateQuery(this.$route.query.name, this.$route.query.initial)
-        console.log(this.$route.query.name)
-        console.log(this.$route.query.initial)
+        this.manipulateQuery(this.$route.query.name, this.$route.query.initial)
       } else {
         this.manipulateQuery(this.$route.query.name, this.$route.query.initial)
-        this.updateQuery(this.$route.query.name, this.$route.query.initial)
+        // this.updateQuery(this.$route.query.name, this.$route.query.initial)
       }
     },
     triggerQuery: function (value) {
