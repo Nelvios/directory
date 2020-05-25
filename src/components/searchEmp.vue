@@ -33,52 +33,59 @@ export default {
   },
   methods: {
     searchEmployee () {
-      if (this.fullName) {
-        const reformatFullName = this.fullName.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')
-        const queryObject = {
-          queryParams: 'fullName',
-          query: reformatFullName
+      if (this.select === 'Full Name') {
+        if (this.fullName) {
+          this.initial = null
+
+          const reformatFullName = this.fullName.toLowerCase().split(' ').map((s) => s.charAt(0).toUpperCase() + s.substring(1)).join(' ')
+          const queryObject = {
+            queryParams: 'fullName',
+            query: reformatFullName
+          }
+          this.$store.commit('setQuery', queryObject)
         }
-        this.$store.commit('setQuery', queryObject)
-        // this.$router.push({ name: 'Home', query: { name: queryObject.query } })
-        // this.$store.dispatch('findQuery', queryObject).then(res => {
-        //   const temp = this.$store.getters.getEmployeeDetail
-        //   this.$store.commit('querySeat', temp)
-        // })
-      } else if (this.initial) {
-        const queryObject = {
-          queryParams: 'initial',
-          query: this.initial.toUpperCase()
+      } else {
+        if (this.initial) {
+          this.fullName = null
+
+          const queryObject = {
+            queryParams: 'initial',
+            query: this.initial.toUpperCase()
+          }
+          this.$store.commit('setQuery', queryObject)
         }
-        this.$store.commit('setQuery', queryObject)
-        // this.$router.push({ name: 'Home', query: { initial: queryObject.query } })
-        // this.$store.dispatch('findQuery', queryObject)
       }
-    },
-    backToInit () {
-      this.select = null
-      this.fullName = null
-      this.initial = null
-    }
-  },
-  computed: {
-    updateNameInitial: function () {
-      return this.$store.getters.queryData
     }
   },
   watch: {
-    updateNameInitial: function (value) {
-      if (!value.query) {
-        this.backToInit()
+    $route (to, from) {
+      if (Object.keys(to.query).length === 0 && to.query.constructor === Object) {
+        this.select = null
+        this.fullName = null
+        this.initial = null
+      } else {
+        if (to.query.name) {
+          try {
+            if (to.query.name.toUpperCase() !== this.fullName.toUpperCase()) {
+              this.select = 'Full Name'
+              this.fullName = to.query.name
+            }
+          } catch (err) {
+            this.select = 'Full Name'
+            this.fullName = to.query.name
+          }
+        } else if (to.query.initial) {
+          try {
+            if (to.query.initial.toUpperCase() !== this.initial.toUpperCase()) {
+              this.select = 'Initial'
+              this.initial = to.query.initial
+            }
+          } catch (err) {
+            this.select = 'Initial'
+            this.initial = to.query.initial
+          }
+        }
       }
-      // if (this.fullName !== value.fullName) {
-      //   this.fullName = value.fullName
-      // } else if (this.initial !== value.initial) {
-      //   this.initial = value.initial
-      // } else if (!value.fullName && !value.initial) {
-      //   this.fullName = null
-      //   this.initial = null
-      // }
     }
   }
 }

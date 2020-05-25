@@ -73,12 +73,8 @@ const mutations = {
     state.seats[payload.index][payload.id] = payload.seatData
   },
   setQuery (state, payload) {
-    console.log(payload)
     state.query = payload
   },
-  // setFullNameOrInitial (state, payload) {
-  //   state.query.query = payload
-  // },
   querySeat (state, payload) {
     const temp = state.seats.filter(function (obj) {
       return searchObj(obj, payload.NIP)
